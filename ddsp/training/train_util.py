@@ -209,7 +209,7 @@ class Trainer(object):
     else:
       return dataset
 
-  @tf.function
+  @tf.function   # Here need to apply dataset with sound
   def train_step(self, dataset_iter):
     """Distributed training step."""
     # Wrap in distribution strategy, slight speedup passing in iter vs batch.
