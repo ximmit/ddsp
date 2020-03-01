@@ -1,5 +1,5 @@
 # Copyright 2020 The DDSP Authors.
-#
+# Timi
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -22,7 +22,7 @@ import ddsp
 from ddsp.training import train_util
 import gin
 import tensorflow.compat.v2 as tf
-
+agfr=124
 tfkl = tf.keras.layers
 
 
