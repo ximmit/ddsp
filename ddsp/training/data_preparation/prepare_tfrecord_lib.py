@@ -36,7 +36,8 @@ def _load_audio(audio_path, sample_rate):
   audio = np.array(audio_segment.get_array_of_samples()).astype(np.float32)
   # Convert from int to float representation.
   audio /= 2**(8 * audio_segment.sample_width)
-  return {'audio': audio}
+  label = 0
+  return {'audio': audio, 'label':label}
 
 
 def _add_loudness(ex, sample_rate, frame_rate, n_fft=2048):
