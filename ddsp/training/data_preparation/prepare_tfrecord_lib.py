@@ -37,7 +37,7 @@ def _load_audio(audio_path, sample_rate):
   # Convert from int to float representation.
   audio /= 2**(8 * audio_segment.sample_width)
 
-  return {'audio': audio;'label': 0}
+  return {'audio': audio}
 
 
 def _add_loudness(ex, sample_rate, frame_rate, n_fft=2048):
@@ -61,6 +61,17 @@ def _add_f0_estimate(ex, sample_rate, frame_rate):
       'f0_confidence': f0_confidence.astype(np.float32)
   })
   return ex
+
+def _add_labels(ex):
+    """Add fundamental frequency (f0) estimate using CREPE."""
+    beam.metrics.Metrics.counter('prepare-tfrecord', 'add_labels').inc()
+    audio = ex['audio']
+
+    ex = dict(ex)
+    ex.update({
+        'label': np.array([0]).astype(np.float32)
+    })
+    return ex
 
 
 def _split_example(
@@ -86,9 +97,8 @@ def _split_example(
     for window_end in range(window_size, len(sequence) + 1, hop_size):
       yield sequence[window_end-window_size:window_end]
 
-  for audio, loudness_db, f0_hz, f0_confidence, label in zip(
+  for audio, loudness_db, f0_hz, f0_confidence in zip(
       get_windows(ex['audio'], sample_rate),
-
       get_windows(ex['loudness_db'], frame_rate),
       get_windows(ex['f0_hz'], frame_rate),
       get_windows(ex['f0_confidence'], frame_rate)):
@@ -97,8 +107,7 @@ def _split_example(
         'audio': audio,
         'loudness_db': loudness_db,
         'f0_hz': f0_hz,
-        'f0_confidence': f0_confidence,
-        'label':0
+        'f0_confidence': f0_confidence
     }
 
 
@@ -153,7 +162,8 @@ def prepare_tfrecord(
       examples = (
           examples
           | beam.Map(_add_f0_estimate, sample_rate, frame_rate)
-          | beam.Map(_add_loudness, sample_rate, frame_rate))
+          | beam.Map(_add_loudness, sample_rate, frame_rate)
+          | beam.Map(_add_labels))
 
     if window_secs:
       examples |= beam.FlatMap(
