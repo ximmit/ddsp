@@ -36,8 +36,8 @@ def _load_audio(audio_path, sample_rate):
   audio = np.array(audio_segment.get_array_of_samples()).astype(np.float32)
   # Convert from int to float representation.
   audio /= 2**(8 * audio_segment.sample_width)
-  label = 0
-  return {'audio': audio}
+
+  return {'audio': audio;'label': 0}
 
 
 def _add_loudness(ex, sample_rate, frame_rate, n_fft=2048):
@@ -86,9 +86,9 @@ def _split_example(
     for window_end in range(window_size, len(sequence) + 1, hop_size):
       yield sequence[window_end-window_size:window_end]
 
-  for audio, loudness_db, f0_hz, f0_confidence in zip(
+  for audio, loudness_db, f0_hz, f0_confidence, label in zip(
       get_windows(ex['audio'], sample_rate),
-      get_windows(ex['audio'], sample_rate),
+
       get_windows(ex['loudness_db'], frame_rate),
       get_windows(ex['f0_hz'], frame_rate),
       get_windows(ex['f0_confidence'], frame_rate)):
