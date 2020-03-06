@@ -37,7 +37,7 @@ def _load_audio(audio_path, sample_rate):
   # Convert from int to float representation.
   audio /= 2**(8 * audio_segment.sample_width)
   label = 0
-  return {'audio': audio, 'label':label}
+  return {'audio': audio}
 
 
 def _add_loudness(ex, sample_rate, frame_rate, n_fft=2048):
@@ -76,8 +76,18 @@ def _split_example(
     sequence = np.pad(sequence, (0, n_padding), mode='constant')
     for window_end in range(window_size, len(sequence) + 1, hop_size):
       yield sequence[window_end-window_size:window_end]
+  def get_windows_label(sequence, rate):
+    window_size = int(1)
+    hop_size = int(hop_secs * rate)
+    n_windows =1
+    n_samples_padded = (n_windows - 1) * hop_size + window_size
+    n_padding = n_samples_padded - len(sequence)
+    sequence = np.pad(sequence, (0, n_padding), mode='constant')
+    for window_end in range(window_size, len(sequence) + 1, hop_size):
+      yield sequence[window_end-window_size:window_end]
 
   for audio, loudness_db, f0_hz, f0_confidence in zip(
+      get_windows(ex['audio'], sample_rate),
       get_windows(ex['audio'], sample_rate),
       get_windows(ex['loudness_db'], frame_rate),
       get_windows(ex['f0_hz'], frame_rate),
@@ -87,7 +97,8 @@ def _split_example(
         'audio': audio,
         'loudness_db': loudness_db,
         'f0_hz': f0_hz,
-        'f0_confidence': f0_confidence
+        'f0_confidence': f0_confidence,
+        'label':0
     }
 
 
