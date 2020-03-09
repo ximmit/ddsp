@@ -156,7 +156,7 @@ def prepare_tfrecord(
           | beam.Map(_add_f0_estimate, sample_rate, frame_rate)
           | beam.Map(_add_loudness, sample_rate, frame_rate)
           #| beam.Map(_add_labels)
-          /)
+          )
 
     if window_secs:
       examples |= beam.FlatMap(
