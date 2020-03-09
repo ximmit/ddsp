@@ -98,8 +98,8 @@ def _split_example(
         'audio': audio,
         'loudness_db': loudness_db,
         'f0_hz': f0_hz,
-        'f0_confidence': f0_confidence,
-        'label': label
+        'f0_confidence': f0_confidence
+        #,'label': label
     }
     print('hear')
 
@@ -155,7 +155,8 @@ def prepare_tfrecord(
           examples
           | beam.Map(_add_f0_estimate, sample_rate, frame_rate)
           | beam.Map(_add_loudness, sample_rate, frame_rate)
-          | beam.Map(_add_labels))
+          #| beam.Map(_add_labels)
+          /)
 
     if window_secs:
       examples |= beam.FlatMap(
