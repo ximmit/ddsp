@@ -60,6 +60,7 @@ def _add_f0_estimate(ex, sample_rate, frame_rate):
       'f0_hz': f0_hz.astype(np.float32),
       'f0_confidence': f0_confidence.astype(np.float32)
   })
+  print(f0_hz.astype(np.float32))
   return ex
 
 def _add_labels(ex):
