@@ -87,9 +87,18 @@ def _split_example(ex, sample_rate, frame_rate, window_secs, hop_secs):
   """Splits example into windows, padding final window if needed."""
 
   def get_windows(sequence, rate):
+    window_size = int(window_secs * rate)   #64000
+    hop_size = int(hop_secs * rate)         #16000
+    n_windows = int(np.ceil((len(sequence) - window_size) / hop_size)) + 1  #36
+    n_samples_padded = (n_windows - 1) * hop_size + window_size #624000
+    n_padding = n_samples_padded - len(sequence)
+    sequence = np.pad(sequence, (0, n_padding), mode='constant')
+    for window_end in range(window_size, len(sequence) + 1, hop_size):
+      yield sequence[window_end-window_size:window_end]
+  def get_windows_label(sequence):
     window_size = int(window_secs * rate)
     hop_size = int(hop_secs * rate)
-    n_windows = int(np.ceil((len(sequence) - window_size) / hop_size))  + 1
+    n_windows = int(np.ceil((len(sequence) - window_size) / hop_size)) + 1
     n_samples_padded = (n_windows - 1) * hop_size + window_size
     n_padding = n_samples_padded - len(sequence)
     sequence = np.pad(sequence, (0, n_padding), mode='constant')
@@ -100,7 +109,8 @@ def _split_example(ex, sample_rate, frame_rate, window_secs, hop_secs):
       get_windows(ex['audio'], sample_rate),
       get_windows(ex['loudness_db'], frame_rate),
       get_windows(ex['f0_hz'], frame_rate),
-      get_windows(ex['f0_confidence'], frame_rate)):
+      get_windows(ex['f0_confidence'], frame_rate),
+      ex['label']):
     beam.metrics.Metrics.counter('prepare-tfrecord', 'split-example').inc()
     yield {
         'audio': audio,
