@@ -189,7 +189,7 @@ class TFRecordProvider(DataProvider):
         'loudness_db':
             tf.io.FixedLenFeature([self._feature_length], dtype=tf.float32),
         'label':
-            tf.io.FixedLenFeature([1], dtype=tf.float32),
+            tf.io.FixedLenFeature([1], dtype=tf.float32, default_value=[0.0]),
     }
 
 
