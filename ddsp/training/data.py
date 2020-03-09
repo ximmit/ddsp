@@ -148,7 +148,7 @@ class TFRecordProvider(DataProvider):
     self._file_pattern = file_pattern or self.default_file_pattern
     self._audio_length = example_secs * sample_rate
     self._feature_length = example_secs * frame_rate
-    self._label_length=0
+    self._label_length=1
   @property
   def default_file_pattern(self):
     """Used if file_pattern is not provided to constructor."""
