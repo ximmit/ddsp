@@ -119,7 +119,7 @@ def _split_example(ex, sample_rate, frame_rate, window_secs, hop_secs):
         'f0_confidence': f0_confidence,
         'label': label
     }
-    print('hear :' + label)
+    print('hear :' + str(label))
 
 def _float_dict_to_tfexample(float_dict):
   """Convert dictionary of float arrays to tf.train.Example proto."""
