@@ -37,6 +37,8 @@ def _load_audio(audio_path, sample_rate):
   # Convert from int to float representation.
   audio /= 2**(8 * audio_segment.sample_width)
   print('I am alive!')
+  print(len(audio))
+  print(audio)
   return {'audio': audio}
 
 
