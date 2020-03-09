@@ -62,8 +62,8 @@ def _add_f0_estimate(ex, sample_rate, frame_rate):
   })
   print('hear2')
   print(f0_hz.astype(np.float32))
-  len(f0_hz.astype(np.float32))
-  type(f0_hz.astype(np.float32))
+  print(type(f0_hz.astype(np.float32)))
+  print(len(f0_hz.astype(np.float32)))
   return ex
 
 def _add_labels(ex):
