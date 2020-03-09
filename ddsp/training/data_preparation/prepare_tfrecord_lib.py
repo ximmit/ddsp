@@ -117,7 +117,7 @@ def _split_example(ex, sample_rate, frame_rate, window_secs, hop_secs):
         'loudness_db': loudness_db,
         'f0_hz': f0_hz,
         'f0_confidence': f0_confidence,
-        'label': label
+        'label': np.array([0, 0]).astype(np.float32)
     }
     print('hear :' + str(label))
     print('hear2 :' + str(f0_hz))
