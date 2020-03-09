@@ -62,17 +62,6 @@ def _add_f0_estimate(ex, sample_rate, frame_rate):
   })
   return ex
 
-def _add_labels(ex):
-    """Add fundamental frequency (f0) estimate using CREPE."""
-    beam.metrics.Metrics.counter('prepare-tfrecord', 'add_labels').inc()
-    audio = ex['audio']
-
-    ex = dict(ex)
-    ex.update({
-        'label': np.array([0]).astype(np.float32)
-    })
-    return ex
-
 
 def _split_example(
     ex, sample_rate, frame_rate, window_secs, hop_secs):
@@ -99,7 +88,6 @@ def _split_example(
         'loudness_db': loudness_db,
         'f0_hz': f0_hz,
         'f0_confidence': f0_confidence
-        #,'label': label
     }
     print('hear')
 
@@ -154,9 +142,7 @@ def prepare_tfrecord(
       examples = (
           examples
           | beam.Map(_add_f0_estimate, sample_rate, frame_rate)
-          | beam.Map(_add_loudness, sample_rate, frame_rate)
-          #| beam.Map(_add_labels)
-          /)
+          | beam.Map(_add_loudness, sample_rate, frame_rate))
 
     if window_secs:
       examples |= beam.FlatMap(
