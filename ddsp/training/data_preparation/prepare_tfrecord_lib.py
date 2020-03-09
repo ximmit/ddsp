@@ -70,7 +70,7 @@ def _split_example(
   def get_windows(sequence, rate):
     window_size = int(window_secs * rate)
     hop_size = int(hop_secs * rate)
-    n_windows = int(np.ceil((len(sequence) - window_size) / hop_size))  + 1
+    n_windows = int(np.ceil((len(sequence) - window_size) / hop_size)) + 1
     n_samples_padded = (n_windows - 1) * hop_size + window_size
     n_padding = n_samples_padded - len(sequence)
     sequence = np.pad(sequence, (0, n_padding), mode='constant')
@@ -87,7 +87,7 @@ def _split_example(
         'audio': audio,
         'loudness_db': loudness_db,
         'f0_hz': f0_hz,
-        'f0_confidence': f0_confidence
+        'f0_confidence': f0_confidence,
     }
     print('hear')
 
