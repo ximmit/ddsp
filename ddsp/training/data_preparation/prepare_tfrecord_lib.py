@@ -36,7 +36,6 @@ def _load_audio(audio_path, sample_rate):
   audio = np.array(audio_segment.get_array_of_samples()).astype(np.float32)
   # Convert from int to float representation.
   audio /= 2**(8 * audio_segment.sample_width)
-  print('I am alive!')
   return {'audio': audio}
 
 
@@ -70,7 +69,7 @@ def _split_example(
   def get_windows(sequence, rate):
     window_size = int(window_secs * rate)
     hop_size = int(hop_secs * rate)
-    n_windows = int(np.ceil((len(sequence) - window_size) / hop_size)) + 1
+    n_windows = int(np.ceil((len(sequence) - window_size) / hop_size))  + 1
     n_samples_padded = (n_windows - 1) * hop_size + window_size
     n_padding = n_samples_padded - len(sequence)
     sequence = np.pad(sequence, (0, n_padding), mode='constant')
@@ -87,9 +86,9 @@ def _split_example(
         'audio': audio,
         'loudness_db': loudness_db,
         'f0_hz': f0_hz,
-        'f0_confidence': f0_confidence,
+        'f0_confidence': f0_confidence
     }
-    print('hear')
+
 
 def _float_dict_to_tfexample(float_dict):
   """Convert dictionary of float arrays to tf.train.Example proto."""
@@ -112,7 +111,6 @@ def prepare_tfrecord(
     hop_secs=1,
     pipeline_options=''):
   """Prepares a TFRecord for use in training, evaluation, and prediction.
-
   Args:
     input_audio_paths: An iterable of paths to audio files to include in
       TFRecord.
@@ -157,4 +155,3 @@ def prepare_tfrecord(
             num_shards=num_shards,
             coder=beam.coders.ProtoCoder(tf.train.Example))
     )
-
