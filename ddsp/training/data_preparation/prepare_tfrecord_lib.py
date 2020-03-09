@@ -38,6 +38,7 @@ def _load_audio(audio_path, sample_rate):
   audio /= 2**(8 * audio_segment.sample_width)
   print('I am alive!')
   print(len(audio))
+
   print(audio)
   return {'audio': audio}
 
@@ -75,13 +76,14 @@ def _add_labels(ex):
 
     ex = dict(ex)
     ex.update({
-        'label': np.array([0]).astype(np.float32)
+        'label': np.array([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]).astype(np.float32)
     })
+    print(np.array([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]).astype(np.float32))
+    print(type(np.array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]).astype(np.float32)))
     return ex
 
 
-def _split_example(
-    ex, sample_rate, frame_rate, window_secs, hop_secs):
+def _split_example(ex, sample_rate, frame_rate, window_secs, hop_secs):
   """Splits example into windows, padding final window if needed."""
 
   def get_windows(sequence, rate):
@@ -94,7 +96,7 @@ def _split_example(
     for window_end in range(window_size, len(sequence) + 1, hop_size):
       yield sequence[window_end-window_size:window_end]
 
-  for audio, loudness_db, f0_hz, f0_confidence in zip(
+  for audio, loudness_db, f0_hz, f0_confidence, label in zip(
       get_windows(ex['audio'], sample_rate),
       get_windows(ex['loudness_db'], frame_rate),
       get_windows(ex['f0_hz'], frame_rate),
@@ -104,8 +106,8 @@ def _split_example(
         'audio': audio,
         'loudness_db': loudness_db,
         'f0_hz': f0_hz,
-        'f0_confidence': f0_confidence
-        #,'label': label
+        'f0_confidence': f0_confidence,
+        'label': label
     }
     print('hear')
 
@@ -161,7 +163,7 @@ def prepare_tfrecord(
           examples
           | beam.Map(_add_f0_estimate, sample_rate, frame_rate)
           | beam.Map(_add_loudness, sample_rate, frame_rate)
-          #| beam.Map(_add_labels)
+          | beam.Map(_add_labels)
           )
 
     if window_secs:
