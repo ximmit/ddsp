@@ -87,22 +87,12 @@ def _split_example(
     sequence = np.pad(sequence, (0, n_padding), mode='constant')
     for window_end in range(window_size, len(sequence) + 1, hop_size):
       yield sequence[window_end-window_size:window_end]
-  def get_windows_label(sequence, rate):
-    window_size = int(1)
-    hop_size = int(hop_secs * rate)
-    n_windows =1
-    n_samples_padded = (n_windows - 1) * hop_size + window_size
-    n_padding = n_samples_padded - len(sequence)
-    sequence = np.pad(sequence, (0, n_padding), mode='constant')
-    for window_end in range(window_size, len(sequence) + 1, hop_size):
-      yield sequence[window_end-window_size:window_end]
 
   for audio, loudness_db, f0_hz, f0_confidence, label in zip(
       get_windows(ex['audio'], sample_rate),
       get_windows(ex['loudness_db'], frame_rate),
       get_windows(ex['f0_hz'], frame_rate),
-      get_windows(ex['f0_confidence'], frame_rate),
-      get_windows(ex['label'], 1)):
+      get_windows(ex['f0_confidence'], frame_rate)):
     beam.metrics.Metrics.counter('prepare-tfrecord', 'split-example').inc()
     yield {
         'audio': audio,
@@ -111,7 +101,7 @@ def _split_example(
         'f0_confidence': f0_confidence,
         'label': label
     }
-
+    print('hear')
 
 def _float_dict_to_tfexample(float_dict):
   """Convert dictionary of float arrays to tf.train.Example proto."""
