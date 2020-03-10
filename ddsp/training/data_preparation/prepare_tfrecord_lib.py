@@ -76,10 +76,10 @@ def _add_labels(ex):
 
     ex = dict(ex)
     ex.update({
-        'label': np.array([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]).astype(np.float32)
+        'label': np.array([[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0]]).astype(np.float32)
     })
-    print(np.array([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]).astype(np.float32))
-    print(type(np.array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]).astype(np.float32)))
+
+
     return ex
 
 
@@ -117,10 +117,10 @@ def _split_example(ex, sample_rate, frame_rate, window_secs, hop_secs):
         'loudness_db': loudness_db,
         'f0_hz': f0_hz,
         'f0_confidence': f0_confidence,
-        'label': np.array([0, 0]).astype(np.float32)
+        'label': label
     }
     print('hear :' + str(label))
-    print('hear2 :' + str(f0_hz))
+
 
 def _float_dict_to_tfexample(float_dict):
   """Convert dictionary of float arrays to tf.train.Example proto."""
