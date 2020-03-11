@@ -103,6 +103,9 @@ class Autoencoder(Model):
   def call(self, features, training=True):
     """Run the core of the network, get predictions and loss."""
     conditioning = self.encode(features, training=training)
+    print('Printing conditions')
+    print(conditioning)
+    print(type(conditioning))
     audio_gen = self.decode(conditioning, training=training)
     if training:
       for loss_obj in self.loss_objs:
