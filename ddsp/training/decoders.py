@@ -125,16 +125,16 @@ class RnnFcDecoder(Decoder):
     print(l)
     # Initial processing.
     f = self.f_stack(f)
-    l = self.l_stack(l)
+    #l = self.l_stack(l)
     print('f and l second time')
     print(f)
-    print(l)
+    #print(l)
     # Run an RNN over the latents.
-    x = tf.concat([f, l], axis=-1)
+    x = tf.concat([f], axis=-1)
     print('this is concat f and l -1')
     print(x)
     x = self.rnn(x)
-    x = tf.concat([f, l, x], axis=-1)
+    x = tf.concat([f, x], axis=-1)
     print('this is concat f and l and x -1')
     print(x)
 
