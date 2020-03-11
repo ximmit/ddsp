@@ -120,11 +120,15 @@ class RnnFcDecoder(Decoder):
 
   def decode(self, conditioning):
     f, l = conditioning['f0_scaled'], conditioning['ld_scaled']
-
+    print('f and l first time')
+    print(f)
+    print(l)
     # Initial processing.
     f = self.f_stack(f)
     l = self.l_stack(l)
-
+    print('f and l second time')
+    print(f)
+    print(l)
     # Run an RNN over the latents.
     x = tf.concat([f, l], axis=-1)
     print('this is concat f and l -1')
