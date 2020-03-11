@@ -107,6 +107,9 @@ class Autoencoder(Model):
     print(conditioning)
     print(type(conditioning))
     audio_gen = self.decode(conditioning, training=training)
+    print('hear loss')
+    print(audio_gen)
+    print(features['audio'])
     if training:
       for loss_obj in self.loss_objs:
         self.add_loss(loss_obj(features['audio'], audio_gen))
