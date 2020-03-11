@@ -138,7 +138,8 @@ class RnnFcDecoder(Decoder):
     x = self.out_stack(x)
     print('this is third x')
     print(x)
-
+    print('this is out')
+    print(self.dense_out(x))
     return self.dense_out(x)
 
 
