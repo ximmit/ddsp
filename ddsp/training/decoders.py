@@ -127,11 +127,18 @@ class RnnFcDecoder(Decoder):
 
     # Run an RNN over the latents.
     x = tf.concat([f, l], axis=-1)
+    print('this is concat f and l -1')
+    print(x)
     x = self.rnn(x)
     x = tf.concat([f, l, x], axis=-1)
+    print('this is concat f and l and x -1')
+    print(x)
 
     # Final processing.
     x = self.out_stack(x)
+    print('this is third x')
+    print(x)
+
     return self.dense_out(x)
 
 
