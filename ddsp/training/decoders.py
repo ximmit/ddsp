@@ -113,7 +113,7 @@ class RnnFcDecoder(Decoder):
 
     # Layers.
     self.f_stack = stack()
-    self.l_stack = stack()
+    #self.l_stack = stack()
     self.rnn = nn.rnn(rnn_channels, rnn_type)
     self.out_stack = stack()
     self.dense_out = nn.dense(self.n_out)
