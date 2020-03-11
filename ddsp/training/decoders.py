@@ -117,6 +117,7 @@ class RnnFcDecoder(Decoder):
     self.rnn = nn.rnn(rnn_channels, rnn_type)
     self.out_stack = stack()
     self.dense_out = nn.dense(self.n_out)
+    # 1
 
   def decode(self, conditioning):
     f, l = conditioning['f0_scaled'], conditioning['ld_scaled']
