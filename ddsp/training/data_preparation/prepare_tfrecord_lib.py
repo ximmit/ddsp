@@ -23,11 +23,26 @@ import numpy as np
 import pydub
 import tensorflow.compat.v2 as tf
 
+Alphabet={'а':1, 'б':2,'в':3,'г':4,'д':5,'е':6,'ё':7,'ж':8,'з':9,'и':10,'й':11\
+    ,'к':12,'л':13,'м':14,'н':15,'о':16,'п':17,'р':18,'с':19,'т':20,'у':21,'ф':22,'х':23,'ц':24,'ч':25\
+    ,'щ':26,'ш':27,'ь':28,'ы':29,'ъ':30,'э':31,'ю':32,'я':33}
+Filenames=list()
+
+counter=0
 
 
 def _load_audio(audio_path, sample_rate):
   """Load audio file."""
   logging.info("Loading '%s'.", audio_path)
+  lbl1=Alphabet[audio_path[-6]]
+  lbl2 = Alphabet[audio_path[-5]]
+  if counter==0:
+      label_names=np.array([[lbl1,lbl2]]).astype(np.float32)
+  else:
+      label_names=np.append(label_names,[[lbl1,lbl2]],axis=0)
+  print('label names')
+  print(audio_path[-6]+audio_path[-5])
+  print(label_names)
   beam.metrics.Metrics.counter('prepare-tfrecord', 'load-audio').inc()
   with tf.io.gfile.GFile(audio_path, 'rb') as f:
     audio_segment = (
@@ -63,10 +78,10 @@ def _add_f0_estimate(ex, sample_rate, frame_rate):
       'f0_hz': f0_hz.astype(np.float32),
       'f0_confidence': f0_confidence.astype(np.float32)
   })
-  print('hear2')
-  print(f0_hz.astype(np.float32))
-  print(type(f0_hz.astype(np.float32)))
-  print(len(f0_hz.astype(np.float32)))
+  #print('hear2')
+  #print(f0_hz.astype(np.float32))
+  #print(type(f0_hz.astype(np.float32)))
+  #print(len(f0_hz.astype(np.float32)))
   return ex
 
 def _add_labels(ex):
@@ -76,7 +91,7 @@ def _add_labels(ex):
 
     ex = dict(ex)
     ex.update({
-        'label': np.array([[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0]]).astype(np.float32)
+        'label': label_names
     })
 
 
