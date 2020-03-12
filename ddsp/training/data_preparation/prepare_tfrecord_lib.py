@@ -90,7 +90,7 @@ def _add_labels(ex):
     """Add fundamental frequency (f0) estimate using CREPE."""
     beam.metrics.Metrics.counter('prepare-tfrecord', 'add_labels').inc()
     audio = ex['audio']
-    global
+    global label_names
     ex = dict(ex)
     ex.update({
         'label': label_names
