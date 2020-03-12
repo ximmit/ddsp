@@ -95,7 +95,7 @@ def _add_labels(ex):
 
     ex = dict(ex)
     ex.update({
-        'label': np.array([[0],[0],[0],[0],[0]]).astype(np.float32)
+        'label': np.array([[1],[2],[3],[4],[5],[6],[7],[8],[9],[10]]).astype(np.float32)
     })
     print('adding labels')
 
