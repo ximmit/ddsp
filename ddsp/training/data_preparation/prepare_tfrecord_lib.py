@@ -137,6 +137,7 @@ def _split_example(ex, sample_rate, frame_rate, window_secs, hop_secs):
         'label': label
     }
     print('hear :' + str(label))
+    print('hear_fo :' + str(f0_hz))
 
 
 def _float_dict_to_tfexample(float_dict):
