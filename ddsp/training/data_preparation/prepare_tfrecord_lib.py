@@ -29,7 +29,7 @@ Alphabet={'а':1, 'б':2,'в':3,'г':4,'д':5,'е':6,'ё':7,'ж':8,'з':9,'и':1
 Filenames=list()
 
 counter=0
-
+label_names=np.array([])
 
 def _load_audio(audio_path, sample_rate):
   """Load audio file."""
