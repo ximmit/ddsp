@@ -33,6 +33,8 @@ label_names=np.array([])
 
 def _load_audio(audio_path, sample_rate):
   """Load audio file."""
+  global counter
+  global label_names
   logging.info("Loading '%s'.", audio_path)
   lbl1=Alphabet[audio_path[-6]]
   lbl2 = Alphabet[audio_path[-5]]
@@ -95,7 +97,7 @@ def _add_labels(ex):
     ex.update({
         'label': np.array([[0],[0],[0],[0],[0]]).astype(np.float32)
     })
-
+    print('adding labels')
 
     return ex
 
