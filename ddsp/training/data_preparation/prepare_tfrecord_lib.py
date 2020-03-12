@@ -38,8 +38,10 @@ def _load_audio(audio_path, sample_rate):
   lbl2 = Alphabet[audio_path[-5]]
   if counter==0:
       label_names=np.array([[lbl1,lbl2]]).astype(np.float32)
+
   else:
       label_names=np.append(label_names,[[lbl1,lbl2]],axis=0)
+  counter = 1
   print('label names')
   print(audio_path[-6]+audio_path[-5])
   print(label_names)
@@ -91,7 +93,7 @@ def _add_labels(ex):
 
     ex = dict(ex)
     ex.update({
-        'label': label_names
+        'label': np.array([[0],[0],[0],[0],[0]]).astype(np.float32)
     })
 
 
