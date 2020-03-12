@@ -38,11 +38,9 @@ def _load_audio(audio_path, sample_rate):
   logging.info("Loading '%s'.", audio_path)
   lbl1=Alphabet[audio_path[-6]]
   lbl2 = Alphabet[audio_path[-5]]
-  if counter==0:
-      label_names=np.array([[lbl1,lbl2]]).astype(np.float32)
+  label_names=np.array([[lbl1,lbl2]]).astype(np.float32)
 
-  else:
-      label_names=np.append(label_names,[[lbl1,lbl2]],axis=0)
+
   counter = 1
   print('label names')
   print(audio_path[-6]+audio_path[-5])
@@ -92,10 +90,10 @@ def _add_labels(ex):
     """Add fundamental frequency (f0) estimate using CREPE."""
     beam.metrics.Metrics.counter('prepare-tfrecord', 'add_labels').inc()
     audio = ex['audio']
-
+    global
     ex = dict(ex)
     ex.update({
-        'label': np.array([[1],[2],[3],[4],[5],[6],[7],[8],[9],[10]]).astype(np.float32)
+        'label': label_names
     })
     print('adding labels')
 
