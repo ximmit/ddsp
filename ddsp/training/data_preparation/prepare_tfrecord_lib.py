@@ -128,6 +128,7 @@ def _split_example(ex, sample_rate, frame_rate, window_secs, hop_secs):
       get_windows(ex['f0_hz'], frame_rate),
       get_windows(ex['f0_confidence'], frame_rate),
       ex['label']):
+
     beam.metrics.Metrics.counter('prepare-tfrecord', 'split-example').inc()
     yield {
         'audio': audio,
@@ -137,7 +138,7 @@ def _split_example(ex, sample_rate, frame_rate, window_secs, hop_secs):
         'label': label
     }
     print('hear :' + str(label))
-    print('hear_fo :' + str(f0_hz))
+    #print('hear_fo :' + str(f0_hz))
 
 
 def _float_dict_to_tfexample(float_dict):
