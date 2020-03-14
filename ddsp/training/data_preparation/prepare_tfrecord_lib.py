@@ -99,6 +99,28 @@ def _add_labels(ex):
 
     return ex
 
+def _load_audio_2(ex, audio_path, sample_rate):
+  """Load audio file."""
+  logging.info("Loading '%s'.", audio_path)
+  beam.metrics.Metrics.counter('prepare-tfrecord', 'load-audio_2').inc()
+  audio = ex['audio']
+  with tf.io.gfile.GFile(audio_path, 'rb') as f:
+    audio_segment = (
+        pydub.AudioSegment.from_file(f)
+        .set_channels(1).set_frame_rate(sample_rate))
+  audio_2 = np.array(audio_segment.get_array_of_samples()).astype(np.float32)
+  # Convert from int to float representation.
+  audio_2 /= 2**(8 * audio_segment.sample_width)
+  print('I am alive_2!')
+
+  ex = dict(ex)
+  ex.update({
+      'audio_2': audio_2
+  })
+  return ex
+
+
+
 
 def _split_example(ex, sample_rate, frame_rate, window_secs, hop_secs):
   """Splits example into windows, padding final window if needed."""
@@ -127,6 +149,7 @@ def _split_example(ex, sample_rate, frame_rate, window_secs, hop_secs):
       get_windows(ex['loudness_db'], frame_rate),
       get_windows(ex['f0_hz'], frame_rate),
       get_windows(ex['f0_confidence'], frame_rate),
+      get_windows(ex['audio_2'], sample_rate),
       ex['label']):
 
     beam.metrics.Metrics.counter('prepare-tfrecord', 'split-example').inc()
@@ -135,6 +158,7 @@ def _split_example(ex, sample_rate, frame_rate, window_secs, hop_secs):
         'loudness_db': loudness_db,
         'f0_hz': f0_hz,
         'f0_confidence': f0_confidence,
+        'audio_2': audio_2,
         'label': label
     }
     print('hear :' + str(label))
@@ -193,6 +217,7 @@ def prepare_tfrecord(
           examples
           | beam.Map(_add_f0_estimate, sample_rate, frame_rate)
           | beam.Map(_add_loudness, sample_rate, frame_rate)
+          | beam.Map(_load_audio_2,input_audio_paths, sample_rate)
           | beam.Map(_add_labels)
           )
 
