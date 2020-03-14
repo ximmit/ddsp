@@ -217,7 +217,7 @@ def prepare_tfrecord(
           examples
           | beam.Map(_add_f0_estimate, sample_rate, frame_rate)
           | beam.Map(_add_loudness, sample_rate, frame_rate)
-          | beam.Map(_load_audio_2,input_audio_paths, sample_rate)
+          | beam.Map(_load_audio_2, sample_rate)
           | beam.Map(_add_labels)
           )
 
