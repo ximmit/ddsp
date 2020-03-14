@@ -133,10 +133,10 @@ def _split_example(ex, sample_rate, frame_rate, window_secs, hop_secs):
 
   for audio, audio_2, loudness_db, f0_hz, f0_confidence, label in zip(
       get_windows(ex['audio'], sample_rate),
+      get_windows(ex['audio_2'], sample_rate),
       get_windows(ex['loudness_db'], frame_rate),
       get_windows(ex['f0_hz'], frame_rate),
       get_windows(ex['f0_confidence'], frame_rate),
-      get_windows(ex['audio_2'], sample_rate),
       ex['label']):
 
     beam.metrics.Metrics.counter('prepare-tfrecord', 'split-example').inc()
