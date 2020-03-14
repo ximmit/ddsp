@@ -99,7 +99,7 @@ def _add_labels(ex):
 
     return ex
 
-def _load_audio_2(ex, audio_path, sample_rate):
+def _load_audio_2(audio_path, sample_rate):
   """Load audio file."""
   logging.info("Loading '%s'.", audio_path)
   beam.metrics.Metrics.counter('prepare-tfrecord', 'load-audio_2').inc()
