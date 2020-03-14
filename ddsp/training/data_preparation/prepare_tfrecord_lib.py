@@ -142,10 +142,10 @@ def _split_example(ex, sample_rate, frame_rate, window_secs, hop_secs):
     beam.metrics.Metrics.counter('prepare-tfrecord', 'split-example').inc()
     yield {
         'audio': audio,
+        'audio_2': audio_2,
         'loudness_db': loudness_db,
         'f0_hz': f0_hz,
         'f0_confidence': f0_confidence,
-        'audio_2': audio_2,
         'label': label
     }
     print('hear :' + str(label))
