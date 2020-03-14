@@ -36,16 +36,16 @@ def _load_audio(audio_path, sample_rate):
   global counter
   global label_names
   logging.info("Loading '%s'.", audio_path)
-  lbl1=Alphabet[audio_path[-6]]
-  lbl2 = Alphabet[audio_path[-5]]
-  label_names=np.array([[lbl1,lbl2]]).astype(np.float32)
+  #lbl1=Alphabet[audio_path[-6]]
+  #lbl2 = Alphabet[audio_path[-5]]
+  #label_names=np.array([[lbl1,lbl2]]).astype(np.float32)
 
 
   counter = 1
-  print('label names')
+  #print('label names')
   print(audio_path)
-  print(audio_path[-6]+audio_path[-5])
-  print(label_names)
+  #print(audio_path[-6]+audio_path[-5])
+  #print(label_names)
 
   beam.metrics.Metrics.counter('prepare-tfrecord', 'load-audio').inc()
   with tf.io.gfile.GFile(audio_path, 'rb') as f:
