@@ -125,7 +125,7 @@ def _split_example(ex, sample_rate, frame_rate, window_secs, hop_secs):
     for window_end in range(window_size, len(sequence) + 1, hop_size):
       yield sequence[window_end-window_size:window_end]
 
-  for audio, loudness_db, f0_hz, f0_confidence, label in zip(
+  for audio, audio_2, loudness_db, f0_hz, f0_confidence, label in zip(
       get_windows(ex['audio'], sample_rate),
       get_windows(ex['loudness_db'], frame_rate),
       get_windows(ex['f0_hz'], frame_rate),
