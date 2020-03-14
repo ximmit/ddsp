@@ -192,8 +192,8 @@ class TFRecordProvider(DataProvider):
             tf.io.FixedLenFeature([self._feature_length], dtype=tf.float32),
         'f0_confidence':
             tf.io.FixedLenFeature([self._feature_length], dtype=tf.float32),
-        'label':
-            tf.io.FixedLenFeature([self._label_length], dtype=tf.float32),
+        #'label':
+        #    tf.io.FixedLenFeature([self._label_length], dtype=tf.float32),
         'loudness_db':
             tf.io.FixedLenFeature([self._feature_length], dtype=tf.float32),
 
