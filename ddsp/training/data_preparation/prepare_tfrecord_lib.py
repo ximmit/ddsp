@@ -52,9 +52,9 @@ def _load_audio(audio_path, sample_rate):
         pydub.AudioSegment.from_file(f)
         .set_channels(1).set_frame_rate(sample_rate))
   audio = np.array(audio_segment.get_array_of_samples()).astype(np.float32)
-  with tf.io.gfile.GFile(str(audio_path.replace("audio","audio_2")), 'rb') as f:
+  with tf.io.gfile.GFile(str(audio_path.replace("audio","audio_2")), 'rb') as sd:
     audio_segment_2 = (
-        pydub.AudioSegment.from_file(f)
+        pydub.AudioSegment.from_file(sd)
         .set_channels(1).set_frame_rate(sample_rate))
   audio_2 = np.array(audio_segment_2.get_array_of_samples()).astype(np.float32)
   # Convert from int to float representation.
