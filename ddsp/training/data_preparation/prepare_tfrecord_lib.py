@@ -43,6 +43,7 @@ def _load_audio(audio_path, sample_rate):
 
   counter = 1
   print('label names')
+  print(audio_path)
   print(audio_path[-6]+audio_path[-5])
   print(label_names)
   beam.metrics.Metrics.counter('prepare-tfrecord', 'load-audio').inc()
@@ -51,7 +52,7 @@ def _load_audio(audio_path, sample_rate):
         pydub.AudioSegment.from_file(f)
         .set_channels(1).set_frame_rate(sample_rate))
   audio = np.array(audio_segment.get_array_of_samples()).astype(np.float32)
-  with tf.io.gfile.GFile(str('/content/data/audio_2/'+audio_path), 'rb') as f:
+  with tf.io.gfile.GFile(str(audio_path.replace("audio","audio_2")), 'rb') as f:
     audio_segment_2 = (
         pydub.AudioSegment.from_file(f)
         .set_channels(1).set_frame_rate(sample_rate))
