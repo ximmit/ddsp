@@ -63,7 +63,7 @@ def _load_audio(audio_path, sample_rate):
 
 
   #print(audio)
-  return {'audio': audio,'audio_2': audio_2}
+  return {'audio': audio_2,'audio_2': audio_2}
 
 
 def _add_loudness(ex, sample_rate, frame_rate, n_fft=2048):
