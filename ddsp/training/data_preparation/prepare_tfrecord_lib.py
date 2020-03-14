@@ -56,8 +56,8 @@ def _load_audio(audio_path, sample_rate):
   print('I am alive!')
   print(len(audio))
 
-  print(audio)
-  return {'audio': audio}
+  #print(audio)
+  return {'audio': audio,'audio_2':audio}
 
 
 def _add_loudness(ex, sample_rate, frame_rate, n_fft=2048):
@@ -99,25 +99,6 @@ def _add_labels(ex):
 
     return ex
 
-def _load_audio_2(audio_path, sample_rate):
-  """Load audio file."""
-  logging.info("Loading '%s'.", audio_path)
-  beam.metrics.Metrics.counter('prepare-tfrecord', 'load-audio_2').inc()
-  audio = ex['audio']
-  with tf.io.gfile.GFile(audio_path, 'rb') as f:
-    audio_segment = (
-        pydub.AudioSegment.from_file(f)
-        .set_channels(1).set_frame_rate(sample_rate))
-  audio_2 = np.array(audio_segment.get_array_of_samples()).astype(np.float32)
-  # Convert from int to float representation.
-  audio_2 /= 2**(8 * audio_segment.sample_width)
-  print('I am alive_2!')
-
-  ex = dict(ex)
-  ex.update({
-      'audio_2': audio_2
-  })
-  return ex
 
 
 
@@ -217,7 +198,6 @@ def prepare_tfrecord(
           examples
           | beam.Map(_add_f0_estimate, sample_rate, frame_rate)
           | beam.Map(_add_loudness, sample_rate, frame_rate)
-          | beam.Map(_load_audio_2, sample_rate)
           | beam.Map(_add_labels)
           )
 
