@@ -46,12 +46,14 @@ def _load_audio(audio_path, sample_rate):
   print(audio_path)
   print(audio_path[-6]+audio_path[-5])
   print(label_names)
+
   beam.metrics.Metrics.counter('prepare-tfrecord', 'load-audio').inc()
   with tf.io.gfile.GFile(audio_path, 'rb') as f:
     audio_segment = (
         pydub.AudioSegment.from_file(f)
         .set_channels(1).set_frame_rate(sample_rate))
   audio = np.array(audio_segment.get_array_of_samples()).astype(np.float32)
+  audio /= 2 ** (8 * audio_segment.sample_width)
   with tf.io.gfile.GFile(str(audio_path.replace("audio","audio_2")), 'rb') as sd:
     audio_segment_2 = (
         pydub.AudioSegment.from_file(sd)
@@ -63,7 +65,7 @@ def _load_audio(audio_path, sample_rate):
 
 
   #print(audio)
-  return {'audio': audio_2,'audio_2': audio_2}
+  return {'audio': audio,'audio_2': audio_2}
 
 
 def _add_loudness(ex, sample_rate, frame_rate, n_fft=2048):
