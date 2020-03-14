@@ -108,11 +108,11 @@ class Autoencoder(Model):
     print(type(conditioning))
     audio_gen = self.decode(conditioning, training=training)
     print('hear loss')
-    print(audio_gen)
-    print(features['audio'])
+    #print(audio_gen)
+    #print(features['audio'])
     if training:
       for loss_obj in self.loss_objs:
-        self.add_loss(loss_obj(features['audio'], audio_gen))
+        self.add_loss(loss_obj(features['audio_2'], audio_gen))
     return audio_gen
 
   def get_controls(self, features, keys=None, training=False):

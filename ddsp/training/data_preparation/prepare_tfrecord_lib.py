@@ -51,13 +51,18 @@ def _load_audio(audio_path, sample_rate):
         pydub.AudioSegment.from_file(f)
         .set_channels(1).set_frame_rate(sample_rate))
   audio = np.array(audio_segment.get_array_of_samples()).astype(np.float32)
+  with tf.io.gfile.GFile(str('/content/data/audio_2/'+audio_path), 'rb') as f:
+    audio_segment_2 = (
+        pydub.AudioSegment.from_file(f)
+        .set_channels(1).set_frame_rate(sample_rate))
+  audio_2 = np.array(audio_segment_2.get_array_of_samples()).astype(np.float32)
   # Convert from int to float representation.
-  audio /= 2**(8 * audio_segment.sample_width)
+  audio_2 /= 2**(8 * audio_segment_2.sample_width)
   print('I am alive!')
-  print(len(audio))
+
 
   #print(audio)
-  return {'audio': audio,'audio_2':audio}
+  return {'audio': audio,'audio_2': audio_2}
 
 
 def _add_loudness(ex, sample_rate, frame_rate, n_fft=2048):
