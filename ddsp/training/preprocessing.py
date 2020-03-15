@@ -58,7 +58,7 @@ class Preprocessor(object):
 class DefaultPreprocessor(Preprocessor):
   """Default class that resamples features and adds `f0_hz` key."""
 
-  def __init__(self, time_steps=1000):
+  def __init__(self, time_steps=2):
     super().__init__()
     self.time_steps = time_steps
 
