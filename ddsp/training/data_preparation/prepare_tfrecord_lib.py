@@ -27,7 +27,8 @@ Alphabet={'а':1, 'б':2,'в':3,'г':4,'д':5,'е':6,'ё':7,'ж':8,'з':9,'и':1
     ,'к':12,'л':13,'м':14,'н':15,'о':16,'п':17,'р':18,'с':19,'т':20,'у':21,'ф':22,'х':23,'ц':24,'ч':25\
     ,'щ':26,'ш':27,'ь':28,'ы':29,'ъ':30,'э':31,'ю':32,'я':33}
 Filenames=list()
-
+start=0
+end=64000
 counter=0
 label_names=np.array([])
 
@@ -35,6 +36,8 @@ def _load_audio(audio_path, sample_rate):
   """Load audio file."""
   global counter
   global label_names
+  global start
+  global end
   logging.info("Loading '%s'.", audio_path)
   try:
     lbl1=Alphabet[audio_path[-6]]
@@ -57,17 +60,19 @@ def _load_audio(audio_path, sample_rate):
         pydub.AudioSegment.from_file(f)
         .set_channels(1).set_frame_rate(sample_rate))
   audio = np.array(audio_segment.get_array_of_samples()).astype(np.float32)
+  audio=audio[start:end]
   audio /= 2 ** (8 * audio_segment.sample_width)
   with tf.io.gfile.GFile(str(audio_path.replace("audio","audio_2")), 'rb') as sd:
     audio_segment_2 = (
         pydub.AudioSegment.from_file(sd)
         .set_channels(1).set_frame_rate(sample_rate))
   audio_2 = np.array(audio_segment_2.get_array_of_samples()).astype(np.float32)
+  audio_2=audio_2[start:end]
   # Convert from int to float representation.
   audio_2 /= 2**(8 * audio_segment_2.sample_width)
   print('I am alive!')
-
-
+  start = start + 64000
+  end = end + 64000
   #print(audio)
   return {'audio': audio,'audio_2': audio_2}
 
