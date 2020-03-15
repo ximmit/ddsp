@@ -65,7 +65,7 @@ class DefaultPreprocessor(Preprocessor):
   def __call__(self, features, training=True):
     super().__call__(features, training)
     return self._default_processing(features)
-
+  #hear
   def _default_processing(self, features):
     """Always resample to `time_steps` and scale 'loudness_db' and 'f0_hz'."""
     for k in ['loudness_db', 'f0_hz']:
