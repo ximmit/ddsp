@@ -120,7 +120,7 @@ class RnnFcDecoder(Decoder):
     # 1
 
   def decode(self, conditioning):
-    f, l = conditioning['f0_scaled'], conditioning['ld_scaled']
+    f, l = conditioning['labels'], conditioning['ld_scaled']
     
     print('f and l first time')
     print(f)

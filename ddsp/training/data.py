@@ -148,7 +148,7 @@ class TFRecordProvider(DataProvider):
     self._file_pattern = file_pattern or self.default_file_pattern
     self._audio_length = example_secs * sample_rate
     self._feature_length = example_secs * frame_rate
-    self._label_length=2
+    self._label_length = 2
   @property
   def default_file_pattern(self):
     """Used if file_pattern is not provided to constructor."""
@@ -192,8 +192,8 @@ class TFRecordProvider(DataProvider):
             tf.io.FixedLenFeature([self._feature_length], dtype=tf.float32),
         'f0_confidence':
             tf.io.FixedLenFeature([self._feature_length], dtype=tf.float32),
-        #'label':
-        #    tf.io.FixedLenFeature([self._label_length], dtype=tf.float32),
+        'label':
+            tf.io.FixedLenFeature([self._label_length], dtype=tf.float32),
         'loudness_db':
             tf.io.FixedLenFeature([self._feature_length], dtype=tf.float32),
 
