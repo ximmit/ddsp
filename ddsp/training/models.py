@@ -106,7 +106,7 @@ class Autoencoder(Model):
     print('Printing conditions')
     print(conditioning)
     print(type(conditioning))
-    audio_gen = self.decode(features, training=training)
+    audio_gen = self.decode(conditioning, training=training)
     print('hear loss')
     #print(audio_gen)
     #print(features['audio'])
