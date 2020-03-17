@@ -183,7 +183,7 @@ class TFRecordProvider(DataProvider):
 
     #print(tf.io.FixedLenFeature([self._feature_length], dtype=tf.float32))
 
-    print(tf.io.FixedLenFeature([self._label_length], dtype=tf.float32))
+    #print(tf.io.FixedLenFeature([self._label_length], dtype=tf.float32))
     return {
         'audio':
             tf.io.FixedLenFeature([self._audio_length], dtype=tf.float32),
