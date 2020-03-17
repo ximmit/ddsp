@@ -59,6 +59,7 @@ def nested_lookup(nested_key: Text,
   """
   # Parse the input string.
   keys = nested_key.split(delimiter)
+  print(keys)
   # Return the nested value.
   value = nested_dict
   for key in keys:
