@@ -68,15 +68,16 @@ class DefaultPreprocessor(Preprocessor):
   #hear
   def _default_processing(self, features):
     """Always resample to `time_steps` and scale 'loudness_db' and 'f0_hz'."""
-    for k in ['loudness_db', 'f0_hz']:
-      features[k] = at_least_3d(features[k])
-      features[k] = ddsp.core.resample(features[k], n_timesteps=self.time_steps)
+    # this is code
+    #for k in ['loudness_db', 'f0_hz']:
+    #  features[k] = at_least_3d(features[k])
+    #  features[k] = ddsp.core.resample(features[k], n_timesteps=self.time_steps)
     for k in ['label']:
       features[k] = at_least_3d(features[k])
     # For NN training, scale frequency and loudness to the range [0, 1].
     # Log-scale f0 features. Loudness from [-1, 0] to [1, 0].
-    features['f0_scaled'] = hz_to_midi(features['f0_hz']) / F0_RANGE
-    features['ld_scaled'] = (features['loudness_db'] / LD_RANGE) + 1.0
+    #features['f0_scaled'] = hz_to_midi(features['f0_hz']) / F0_RANGE
+    #features['ld_scaled'] = (features['loudness_db'] / LD_RANGE) + 1.0
     return features
 
 
