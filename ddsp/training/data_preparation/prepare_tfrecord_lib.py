@@ -93,10 +93,17 @@ def _add_f0_estimate(ex, sample_rate, frame_rate):
   audio = ex['audio']
   f0_hz, f0_confidence = compute_f0(audio, sample_rate, frame_rate)
   ex = dict(ex)
+  lte=f0_hz.astype(np.float32)
+
   print('THIS IS F0')
-  print(f0_hz.astype(np.float32))
+  print(lte)
+
+  for each in lte:
+      each=0
+  print('THIS IS F0_New')
+  print(lte)
   ex.update({
-      'f0_hz': f0_hz.astype(np.float32),
+      'f0_hz': lte,
       'f0_confidence': f0_confidence.astype(np.float32)
   })
   #print('hear2')
