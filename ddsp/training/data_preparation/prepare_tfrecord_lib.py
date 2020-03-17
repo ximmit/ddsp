@@ -108,7 +108,7 @@ def _add_f0_estimate(ex, sample_rate, frame_rate):
   print(len(lte))
 
   for every in range(len(label_names)):
-      lte[every]=label_names[every]
+      lte[every]=label_names[0][every]
 
   print('THIS IS F0_New_2')
   print(lte)
