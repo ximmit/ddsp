@@ -71,7 +71,7 @@ class DefaultPreprocessor(Preprocessor):
     # this is code
     for k in ['loudness_db', 'f0_hz']:
       features[k] = at_least_3d(features[k])
-    #  features[k] = ddsp.core.resample(features[k], n_timesteps=self.time_steps)
+      features[k] = ddsp.core.resample(features[k], n_timesteps=self.time_steps)
     #for k in ['f0_hz']:
     #  features[k] = at_least_3d(features[k])
     # For NN training, scale frequency and loudness to the range [0, 1].
