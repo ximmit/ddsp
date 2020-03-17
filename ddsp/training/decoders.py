@@ -121,7 +121,7 @@ class RnnFcDecoder(Decoder):
 
   def decode(self, conditioning):
     #f, l = conditioning['label'], conditioning['ld_scaled']
-    f= conditioning['label']
+    f= conditioning['f0_hz']
     print('f and l first time')
     print(f)
     #print(l)
