@@ -63,6 +63,8 @@ def nested_lookup(nested_key: Text,
   # Return the nested value.
   value = nested_dict
   for key in keys:
+    if keys==['f0_hz']:
+      continue
     value = value[key]
   return value
 
