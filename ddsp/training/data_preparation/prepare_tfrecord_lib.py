@@ -43,12 +43,12 @@ def _load_audio(audio_path, sample_rate):
     lbl1=Alphabet[audio_path[-6]]
     lbl2 = Alphabet[audio_path[-5]]
   except:
-      lbl1=1
-      lbl2=2
+      lbl1=1 + counter
+      lbl2=2 + counter
   label_names=np.array([[lbl1,lbl2]]).astype(np.float32)
 
 
-  counter = 1
+  counter = counter + 1
   print('label names')
   print(audio_path)
   #print(audio_path[-6]+audio_path[-5])
@@ -107,7 +107,7 @@ def _add_f0_estimate(ex, sample_rate, frame_rate):
   print(lte)
   print(len(lte))
 
-  for every in range(len(label_names)):
+  for every in range(len(label_names[0])):
       lte[every]=label_names[0][every]
 
   print('THIS IS F0_New_2')
