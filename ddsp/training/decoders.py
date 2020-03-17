@@ -113,30 +113,30 @@ class RnnFcDecoder(Decoder):
 
     # Layers.
     self.f_stack = stack()
-    #self.l_stack = stack()
+    self.l_stack = stack()
     self.rnn = nn.rnn(rnn_channels, rnn_type)
     self.out_stack = stack()
     self.dense_out = nn.dense(self.n_out)
     # 1
 
   def decode(self, conditioning):
-    #f, l = conditioning['label'], conditioning['ld_scaled']
-    f= conditioning['f0_hz']
+    f, l = conditioning['f0_hz'], conditioning['ld_scaled']
+    #f= conditioning['f0_hz']
     print('f and l first time')
     print(f)
     #print(l)
     # Initial processing.
     f = self.f_stack(f)
-    #l = self.l_stack(l)
+    l = self.l_stack(l)
     print('f and l second time')
     print(f)
-    #print(l)
+    print(l)
     # Run an RNN over the latents.
-    x = tf.concat([f], axis=-1)
+    x = tf.concat([f,l], axis=-1)
     print('this is concat f and l -1')
     print(x)
     x = self.rnn(x)
-    x = tf.concat([f, x], axis=-1)
+    x = tf.concat([f,l, x], axis=-1)
     print('this is concat f and l and x -1')
     print(x)
 
