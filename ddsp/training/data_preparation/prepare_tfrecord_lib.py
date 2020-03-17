@@ -94,18 +94,31 @@ def _add_f0_estimate(ex, sample_rate, frame_rate):
   f0_hz, f0_confidence = compute_f0(audio, sample_rate, frame_rate)
   ex = dict(ex)
   lte=f0_hz.astype(np.float32)
-
+  global label_names
   print('THIS IS F0')
   print(lte)
 
-  for each in lte:
-      each=0
+  for each in range(len(lte)):
+      lte[each]=0
+
   print('THIS IS F0_New')
+
+
+  print(lte)
+  print(len(lte))
+
+  for every in range(len(label_names)):
+      lte[every]=label_names[every]
+
+  print('THIS IS F0_New_2')
   print(lte)
   ex.update({
       'f0_hz': lte,
       'f0_confidence': f0_confidence.astype(np.float32)
   })
+
+
+
   #print('hear2')
   #print(f0_hz.astype(np.float32))
   #print(type(f0_hz.astype(np.float32)))
@@ -160,6 +173,9 @@ def _split_example(ex, sample_rate, frame_rate, window_secs, hop_secs):
       ex['label']):
 
     beam.metrics.Metrics.counter('prepare-tfrecord', 'split-example').inc()
+    print('yield f0')
+    print(f0_hz)
+    print(len(f0_hz))
     yield {
         'audio': audio,
         'audio_2': audio_2,
